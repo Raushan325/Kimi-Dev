@@ -1,0 +1,43 @@
+from setuptools import find_packages, setup
+
+
+setup(
+    name='kimidev',
+    version='0.1.0',
+    packages=find_packages(),
+    package_data={
+        '': ['*.json'],
+    },
+    include_package_data=True,
+    install_requires=[
+        'anthropic',
+        'openai',
+        'pre-commit',
+        'datasets',
+        'tiktoken',
+        'libcst',
+        'llama-index',
+        'ipdb',
+        'jsonlines',
+        "beautifulsoup4",
+        "chardet",
+        "datasets",
+        "docker",
+        "ghapi",
+        "GitPython",
+        "modal",
+        "pre-commit",
+        "python-dotenv",
+        "requests",
+        "rich",
+        "tenacity",
+        "tqdm",
+        "unidiff",
+        "termcolor",
+        "matplotlib",
+        "vllm",
+    ],  
+    author='Kimi Dev',
+    description='Kimi Dev is a lightweight scaffolding for SWE-Bench.',
+    keywords='kimidev',    
+)
