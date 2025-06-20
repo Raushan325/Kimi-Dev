@@ -15,6 +15,9 @@ Introducing Kimi-Dev: <br>A Strong and Open-source Coding LLM for Issue Resoluti
   </a> &nbsp;|&nbsp;
   <a href="https://huggingface.co/moonshotai/Kimi-Dev-72B">
     <b>🤗 Huggingface</b>
+  </a> &nbsp;|&nbsp;
+  <a href="https://huggingface.co/spaces/moonshotai/Kimi-Dev-72B">
+    <b>💻 Demo (HF Space)</b>
   </a> &nbsp;
 </div>
 <br>
