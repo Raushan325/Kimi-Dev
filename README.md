@@ -104,6 +104,7 @@ python kimidev/examples/rollout_messages_testwriter.py --model_name {vllm_serve_
 ## 👀 Example Results
 We provide some example result files as well as the files required for test-time scaling [here](./resources/).
 
+You can also download these files from [Google Drive](https://drive.google.com/file/d/1Tv4u9_CjCAOIhyZC1pOmpHFx3q0Ui8ru/view?usp=drive_link).
 
 ## 💪 Contributing
 
