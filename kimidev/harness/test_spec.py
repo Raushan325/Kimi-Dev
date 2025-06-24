@@ -256,90 +256,22 @@ def make_eval_script_list(instance, specs, env_name, repo_directory, base_commit
     else:
         version = None
 
-    if instance["instance_id"].startswith("python__mypy"): #== "Project-MONAI__MONAI-1107":
-
-        pass_to_pass = json.loads(instance[PASS_TO_PASS]) if isinstance(instance[PASS_TO_PASS], str) else instance[PASS_TO_PASS]
-        fail_to_pass = json.loads(instance[FAIL_TO_PASS]) if isinstance(instance[FAIL_TO_PASS], str) else instance[FAIL_TO_PASS]
-
-        all_tests = " ".join(fail_to_pass + pass_to_pass)
-
-        if version is not None:
-            test_command = " ".join(
-                [
-                    MAP_REPO_VERSION_TO_SPECS[instance["repo"]][instance["version"]]["test_cmd"],
-                    all_tests
-                ]
-            )
-        else:
-            test_command = " ".join(
-                [
-                    MAP_REPO_TO_SPECS[instance["repo"]]["test_cmd"],
-                    all_tests
-                ]
-            )
-
-
-        # print(test_command)
-
-        # test_command = " ".join(
-        #     [
-        #         # TEST_PYTEST_VERBOSE,
-        #         # "python",
-        #         # "python -m unittest",
-        #         # "pytest -v -rA",
-        #         # "pytest -v --capture=no -rA",
-        #         # "pytest -vv -o console_output_style=classic --tb=no",
-        #         # "pytest -vv -rA",
-        #         # "pytest  -vv -s -rA",
-        #         # "pytest -v -s -rA -p no:cacheprovider",
-        #         # "pytest -vv -s -rA --tb=long -p no:cacheprovider",
-        #         "pytest -v -s -rA",
-        #         # "pytest --full-trace",
-        #         *get_test_directives(instance),
-        #     ]
-        # )
+    if version is not None:
+        test_command = " ".join(
+            [
+                MAP_REPO_VERSION_TO_SPECS[instance["repo"]][instance["version"]]["test_cmd"],
+                *get_test_directives(instance),
+            ]
+        )
     else:
-        if version is not None:
-            test_command = " ".join(
-                [
-                    MAP_REPO_VERSION_TO_SPECS[instance["repo"]][instance["version"]]["test_cmd"],
-                    *get_test_directives(instance),
-                ]
-            )
-        else:
-            test_command = " ".join(
-                [
-                    MAP_REPO_TO_SPECS[instance["repo"]]["test_cmd"],
-                    all_tests
-                ]
-            )            
+        test_command = " ".join(
+            [
+                MAP_REPO_TO_SPECS[instance["repo"]]["test_cmd"],
+                all_tests
+            ]
+        )            
 
-    if instance["instance_id"].startswith("pandas-dev"):
-        eval_commands = [
-            "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/activate.d/activate-binutils_linux-64.sh",
-
-            "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/activate.d/activate-gcc_linux-64.sh",
-            "sed -i 's/\"${SYS_SYSROOT}\"/\"${SYS_SYSROOT:-}\"/g' /opt/miniconda3/envs/testbed/etc/conda/activate.d/activate-gcc_linux-64.sh",
-
-            "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/activate.d/activate-gxx_linux-64.sh",
-            "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/activate.d/activate-gxx_linux-64.sh",
-
-            "sed -i 's/$_CONDA_SET_PROJ_LIB/${_CONDA_SET_PROJ_LIB:-}'/g /opt/miniconda3/envs/testbed/etc/conda/deactivate.d/proj4-deactivate.sh",
-
-            "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/deactivate.d/deactivate-gxx_linux-64.sh",
-            "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/deactivate.d/deactivate-gcc_linux-64.sh",
-            "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/deactivate.d/deactivate-binutils_linux-64.sh",
-
-            # "cat /opt/miniconda3/envs/testbed/etc/conda/deactivate.d/proj4-deactivate.sh",
-            # "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/activate.d/libarrow_activate.sh",
-            # "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/activate.d/libglib_activate.sh",
-            # "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/activate.d/libxml2_activate.sh",
-            # "sed -i 's/\\$${from}$thing/\\${${from}${thing}:-}/g' /opt/miniconda3/envs/testbed/etc/conda/activate.d/proj4-activate.sh",
-        ]
-    else:
-        eval_commands = []
-
-    eval_commands += [
+    eval_commands = [
         "source /opt/miniconda3/bin/activate",
         f"conda activate {env_name}",
         f"cd {repo_directory}",
@@ -451,4 +383,3 @@ def make_test_spec(instance: SWEbenchInstance, customized_test_patch: str | None
             FAIL_TO_PASS=fail_to_pass,
             PASS_TO_PASS=pass_to_pass,
         )
-

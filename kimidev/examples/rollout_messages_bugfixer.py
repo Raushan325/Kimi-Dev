@@ -21,8 +21,6 @@ from datasets import load_dataset
 from kimidev.agentlessnano.model_api import make_model
 from kimidev.agentlessnano.utils import *
 from kimidev.agentlessnano.post_process import generate_model_patch, generate_model_patch_difflib
-from kimidev.agentlessnano.reward_manager import calculate_rewards
-
 
 ### llm response
 def relevant_file_prompt_response(llm_model, problem_statement, structure):
