@@ -300,7 +300,10 @@ def get_repo_files(structure, filepaths: list[str]):
 
         for file_content in files:
             if file_content[0] == filepath:
-                content = '\n'.join(file_content[1])
+                if(len(file_content[1]) > 0 and file_content[1][0].endswith('\n')):
+                    content = "".join(file_content[1])
+                else:
+                    content = "\n".join(file_content[1])
                 file_contents[filepath] = content
                 break
 
